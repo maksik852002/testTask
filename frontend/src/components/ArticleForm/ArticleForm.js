@@ -44,7 +44,7 @@ const ArticleForm = ({ create, article, categories, isAdding, match }) => {
     title: "",
   });
   const [description, setDescription] = useState(EditorState.createEmpty());
-
+ 
   useEffect(() => {
      if (categories && categories[0]) {
       setValues({...values, category: categories[0]._id });
@@ -60,8 +60,8 @@ const ArticleForm = ({ create, article, categories, isAdding, match }) => {
   }, [article, categories]);
 
   const checkDescription = (data) => {
-    let isEmpty;
-    data.blocks.forEach(el => (el.text === '' ? isEmpty=true : isEmpty=false))
+    let isEmpty = true;
+    data.blocks.forEach(el => (el.text !== '' && (isEmpty=false)))
     return isEmpty;
   }
 
