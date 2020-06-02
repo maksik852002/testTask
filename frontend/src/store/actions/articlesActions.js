@@ -104,12 +104,12 @@ export const editArticle = (data, id) => {
   };
 };
 
-export const deleteArticle = (id) => {
+export const deleteArticle = (id, category) => {
   return async (dispatch) => {
     try {
       const response = await axiosApi.delete(`/articles/${id}`);
       toast.success(response.data.message);
-      dispatch(getArticles())
+      dispatch(getArticles(category));
     } catch (error) {
       dispatch(deleteArticleFailure(error.response.data));
     }

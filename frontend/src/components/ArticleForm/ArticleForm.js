@@ -22,6 +22,16 @@ const useStyles = makeStyles((theme) => ({
   errorWrapper: {
     border: "1px solid #f44336",
     borderRadius: theme.shape.borderRadius,
+  },
+  helper: {
+    fontSize: '0.75rem',
+    textAlign: 'left',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: 400,
+    lineHeight: '1.66',
+    letterSpacing: '0.03333em',
+    color: '#f44336',
+    margin: '3px 14px 0'
   }
 }));
 
@@ -101,6 +111,8 @@ const ArticleForm = ({ create, article, categories, isAdding, match }) => {
     }
   };
   
+  console.log(error&&error.errors)
+
   return (
     <form onSubmit={submitFormHandler}>
       <Grid item container direction="column" spacing={2}>
@@ -112,7 +124,6 @@ const ArticleForm = ({ create, article, categories, isAdding, match }) => {
             onChange={inputChangeHandler}
             options={categoriesOptions}
             value ={values.category}
-            default={'gsdgsdg'}
             error={getFieldError('category')}
           />
         </Grid>
@@ -146,7 +157,7 @@ const ArticleForm = ({ create, article, categories, isAdding, match }) => {
               },
             }}
           />
-          {getFieldError('description') && <p className='MuiFormHelperText-root Mui-error MuiFormHelperText-contained'>{getFieldError('description')}</p>}
+          {error&&error.errors.description&&<p className={classes.helper}>{getFieldError('description')}</p>}
         </Grid>
         <Grid item container justify='flex-end' xs >
           <Button type="submit" color='primary' variant='contained'>{isAdding ? "Create" : "Edit Article"}</Button>

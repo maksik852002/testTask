@@ -81,7 +81,7 @@ const Articles = () => {
   };
 
   const saveActionHandler = (id) => {
-    dispatch(deleteArticle(id));
+    dispatch(deleteArticle(id, category));
     setConfirm(null);
   };
 
@@ -178,7 +178,7 @@ const Articles = () => {
                           <Tooltip title="Delete">
                             <IconButton
                               disabled={confirm !== null}
-                              onClick={() => tableRaw.current.focus()}
+                              onClick={() => confirm !== null &&tableRaw.current.focus()}
                             >
                               <DeleteOutline htmlColor="rgba(33,33,33,1)" />
                             </IconButton>
