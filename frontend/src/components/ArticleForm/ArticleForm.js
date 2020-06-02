@@ -46,6 +46,9 @@ const ArticleForm = ({ create, article, categories, isAdding, match }) => {
   const [description, setDescription] = useState(EditorState.createEmpty());
 
   useEffect(() => {
+     if (categories && categories[0]) {
+      setValues({...values, category: categories[0]._id });
+    }
     if (article) {
       const parsed = EditorState.createWithContent(
         convertFromRaw(JSON.parse(article.description))
@@ -53,9 +56,6 @@ const ArticleForm = ({ create, article, categories, isAdding, match }) => {
       setDescription(parsed);
       setValues({...values, category: article.category._id, title: article.title});
     }
-    // if (categories && categories[0]) {
-    //   setValues({...values, category: categories[0]._id });
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [article, categories]);
 
@@ -110,8 +110,6 @@ const ArticleForm = ({ create, article, categories, isAdding, match }) => {
       return undefined;
     }
   };
-  
-  console.log(error&&error.errors)
 
   return (
     <form onSubmit={submitFormHandler}>
