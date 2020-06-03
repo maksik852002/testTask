@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fff",
   },
   toolbar: {
-    paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
   },
   title: {
