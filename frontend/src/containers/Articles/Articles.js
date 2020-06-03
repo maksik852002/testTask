@@ -88,6 +88,7 @@ const Articles = () => {
 
   const selectCategoryHandler = (e) => {
     setCategory(e.target.value);
+    setConfirm(null);
     dispatch(getArticles(e.target.value))
   }
 
@@ -186,13 +187,13 @@ const Articles = () => {
                     </TableRow>
                   ) : (
                     <TableRow key={article._id}>
-                      <TableCell colSpan={3}>
+                      <TableCell colSpan={3} style={{padding: '8px 16px'}}>
                         <Typography variant="h6">
                           Are you sure you want to delete this row?
                         </Typography>
                       </TableCell>
                       <TableCell align="right" style={{ padding: "0 5px" }}>
-                        <div style={{ width: "96px" }}>
+                        <div style={{ width: "144px" }}> 
                           <Tooltip title="Save">
                             <IconButton
                               onClick={() => saveActionHandler(article._id)}
