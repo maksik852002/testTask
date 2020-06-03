@@ -4,13 +4,14 @@ import MaterialTable from 'material-table';
 import {getUsers, deleteUser} from '../../store/actions/usersActions';
 import { apiURL, defaultAvatar } from "../../constants";
 import {tableIcons} from './TableIcons';
+import { toast } from "react-toastify";
 import axiosApi from "../../axiosApi";
 import FormElement from '../../components/UI/Form/FormElement';
 
 const Users = () => {
 
   const dispatch = useDispatch();
-  const role = useSelector(state => state.users.user.role);
+  const user = useSelector(state => state.users.user);
   const data = useSelector(state => state.users.users);
   const [error, setError] = useState(null);
 
@@ -52,7 +53,11 @@ const Users = () => {
         resolve()
         dispatch(getUsers())
       })
-      .catch(error => reject(setError(error.response.data)))
+      .catch(error => {
+        reject()
+        setError(error.response.data)
+        toast.error(error.response.data.error);
+      })
     })
   };
 
@@ -106,7 +111,7 @@ const Users = () => {
       options={{
         actionsColumnIndex: -1,
       }}
-      editable={role ==='admin' ? { 
+      editable={user.role ==='admin' ? { 
         onRowAdd: newData => addUserHandler(newData),
         onRowUpdate: newData => editUserHandler(newData),
         onRowDelete: (oldData) => dispatch(deleteUser(oldData._id)),

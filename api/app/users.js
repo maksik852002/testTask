@@ -18,7 +18,6 @@ router.get('/', auth, async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-  
 });
 
 router.post('/', upload.single('avatar'), async (req, res) => {
@@ -91,6 +90,9 @@ router.delete('/sessions', async (req, res) => {
 router.patch('/:id', [auth, permit('admin'), upload.single('avatar')], async (req, res) => {
   const user = await User.findById(req.params.id)
   try {
+    if (req.user._id.toString() === req.params.id.toString()) {
+      return res.status(424).send({error: 'Unable to edit logged in user'});
+    }
     if (!user) { 
       return res.status(404).send({error: 'Not found'});
     }
@@ -109,7 +111,6 @@ router.patch('/:id', [auth, permit('admin'), upload.single('avatar')], async (re
     if (req.file) {
       user.avatar = req.file.filename;
     }
-
     await user.save();
     return res.send({message: 'edited'});
   } catch (e) {
@@ -123,6 +124,9 @@ router.patch('/:id', [auth, permit('admin'), upload.single('avatar')], async (re
 
 router.delete('/:id',[auth, permit('admin')], async (req, res) => {
   try {
+  if (req.user._id.toString() === req.params.id.toString()) {
+    return res.status(424).send({error: 'Unable to delete logged in user'});
+  }
   const user = await User.findByIdAndDelete(req.params.id) 
   if (!user) { 
     return res.status(404).send({error: 'Not found'});

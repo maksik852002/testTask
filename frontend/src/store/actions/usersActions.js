@@ -73,6 +73,7 @@ export const deleteUser = (id) => {
       await axiosApi.delete(`/users/${id}`);
       dispatch(getUsers());
     } catch (error) {
+      toast.error(error.response.data.error);
       dispatch(deleteUserFailure(error.response.data));
     }
   };
