@@ -76,6 +76,7 @@ const Articles = () => {
   };
 
   const deleteHandler = (id) => {
+    confirm !== null && tableRaw.current.focus()
     const index = articles.findIndex((el) => el._id === id);
     setConfirm(index);
   };
@@ -143,9 +144,6 @@ const Articles = () => {
                     <TableRow
                       ref={tableRaw}
                       className={confirm !== null ? classes.fade : ""}
-                      onClick={() =>
-                        confirm === null && deleteHandler(article._id)
-                      }
                       key={article._id}
                     >
                       <TableCell>{article.title}</TableCell>
@@ -178,7 +176,7 @@ const Articles = () => {
                           <Tooltip title="Delete">
                             <IconButton
                               disabled={confirm !== null}
-                              onClick={() => confirm !== null &&tableRaw.current.focus()}
+                              onClick={() => deleteHandler(article._id)}
                             >
                               <DeleteOutline htmlColor="rgba(33,33,33,1)" />
                             </IconButton>
