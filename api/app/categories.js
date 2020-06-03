@@ -72,7 +72,7 @@ router.delete("/:id", auth, async (req, res) => {
   try {
     const articles = await Article.find({category: req.params.id})
     if (articles.length > 0) {
-      return res.status(422).send({ error: "Delete related articles first" });
+      return res.status(424).send({ error: "Delete related articles first" });
     }
     const category = await Category.findByIdAndRemove(req.params.id);
     if (!category) {
